@@ -20,7 +20,6 @@ def minerar_quina():
                 linha = linha.strip()
                 if not linha: continue
                 
-                # --- CORREÇÃO DE BLINDAGEM (Igual ao main.py e app.py) ---
                 partes = linha.split(';') # Força separador correto
                 nums = []
                 
@@ -46,7 +45,7 @@ def minerar_quina():
         print("⚠️ Nenhum jogo válido encontrado.")
         return
 
-    # --- 1. FREQUÊNCIA DE PARES (DUQUES) ---
+    #  1. FREQUÊNCIA DE PARES 
     todos_pares = []
     for jogo in dataset: 
         todos_pares.extend(combinations(jogo, 2))
@@ -56,7 +55,7 @@ def minerar_quina():
     for par, qtd in freq_pares.most_common(5):
         print(f"   Par {par}: Saiu {qtd} vezes")
 
-    # --- 2. FREQUÊNCIA DE TERNOS (TRIOS) ---
+    # 2. FREQUÊNCIA DE TERNOS (TRIOS)
     todos_ternos = []
     for jogo in dataset:
         todos_ternos.extend(combinations(jogo, 3))
@@ -67,7 +66,7 @@ def minerar_quina():
     for trio, qtd in freq_ternos.most_common(5):
         print(f"   Trio {trio}: Saiu {qtd} vezes")
 
-    # --- 3. ANÁLISE DE SOMA ---
+    #  3. ANÁLISE DE SOMA 
     somas = [sum(jogo) for jogo in dataset]
     if somas:
         media_soma = statistics.mean(somas)
@@ -79,7 +78,7 @@ def minerar_quina():
         print(f"   Soma Mínima registrada: {min_soma_comum}")
         print(f"   Soma Máxima registrada: {max_soma_comum}")
 
-    # --- 4. OS ATRASADOS ---
+    #  4. OS ATRASADOS 
     atrasos = {n: 0 for n in range(1, 81)}
     encontrados = set()
     # Varre do mais recente para o mais antigo

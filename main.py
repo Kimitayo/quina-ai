@@ -7,7 +7,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.model_selection import train_test_split
 import os
 
-# --- CONFIGURAÇÕES OTIMIZADAS QUINA ---
+# CONFIGURAÇÕES OTIMIZADAS QUINA
 ARQUIVO_DADOS = 'quina.csv'
 ARQUIVO_LSTM = 'quina_cerebro_lstm.keras'
 ARQUIVO_GRU = 'quina_cerebro_gru.keras'
@@ -15,7 +15,7 @@ ARQUIVO_GRU = 'quina_cerebro_gru.keras'
 WINDOW_SIZE = 20       # Quina precisa de histórico maior que Loto
 NUM_NUMEROS = 80       # Universo 1-80
 
-# --- FEATURES AVANÇADAS ---
+# FEATURES AVANÇADAS 
 # 1.Pares, 2.Soma, 3.Primos, 4.Fibo, 5.Repetidos, 6.Amplitude
 # 7 a 14: As 8 faixas de dezenas (01-10, 11-20 ... 71-80)
 NUM_FEATURES_EXTRAS = 14
@@ -41,11 +41,9 @@ def carregar_dados():
                 linha = linha.strip()
                 if not linha: continue
                 
-                # --- ALTERAÇÃO AQUI: BLINDAGEM DO CSV ---
-                # 1. Forçamos o separador ';'
+
                 partes = linha.split(';')
                 
-                # 2. Ignoramos as colunas 0 (Concurso) e 1 (Data)
                 # O loop começa da parte 2 em diante
                 nums = []
                 for p in partes[2:]:
@@ -54,7 +52,6 @@ def carregar_dados():
                         if 1 <= n <= 80: nums.append(n)
                     except: continue
                 
-                # 3. Se achou 5 números, salva (já ordenado)
                 if len(nums) >= 5:
                     dataset_final.append(sorted(nums))
         
@@ -83,11 +80,10 @@ def calcular_features_extras(jogos):
         
         amplitude = max(jogo) - min(jogo)
 
-        # --- NOVA LÓGICA: DEZENAS (Historiograma) ---
         # Conta quantos números caíram em cada década (1-10, 11-20...)
         dezenas = [0] * 8
         for n in jogo:
-            idx = (n - 1) // 10 # Retorna 0 para 1-10, 1 para 11-20, etc.
+            idx = (n - 1) // 10 # Retorna 0 para 1-10, 1 para 11-20...
             if 0 <= idx < 8:
                 dezenas[idx] += 1
         

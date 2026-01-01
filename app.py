@@ -5,7 +5,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 import os
 from itertools import combinations
 
-# --- CONFIGURAÇÕES IDÊNTICAS AO MAIN ---
+#  CONFIGURAÇÕES IDÊNTICAS AO MAIN 
 ARQUIVO_DADOS = 'quina.csv'
 ARQUIVO_LSTM = 'quina_cerebro_lstm.keras'
 ARQUIVO_GRU = 'quina_cerebro_gru.keras'
@@ -14,7 +14,6 @@ NUM_NUMEROS = 80
 NUM_FEATURES_EXTRAS = 14 # Sincronizado com main.py
 INPUT_DIM = NUM_NUMEROS + NUM_FEATURES_EXTRAS
 
-# --- FILTROS DE ELITE (QUINA) ---
 MIN_SOMA = 120
 MAX_SOMA = 290
 MIN_PARES = 1
@@ -35,7 +34,6 @@ def carregar_ultimos_jogos():
                 linha = linha.strip()
                 if not linha: continue
                 
-                # --- CORREÇÃO AQUI (Igual ao main.py) ---
                 partes = linha.split(';') # Força ponto e vírgula
                 nums = []
                 # Pula as colunas 0 (Concurso) e 1 (Data)
@@ -48,7 +46,6 @@ def carregar_ultimos_jogos():
                 if len(nums) >= 5:
                     dataset_final.append(sorted(nums)) # Salva ordenado
         
-        # Pega apenas a janela necessária para a previsão
         if len(dataset_final) >= WINDOW_SIZE:
             return dataset_final[-WINDOW_SIZE:]
         else: return []
@@ -70,7 +67,6 @@ def calcular_features_extras(jogos):
         
         amplitude = max(jogo) - min(jogo)
 
-        # Historiograma de Dezenas (0-9, 10-19...)
         dezenas = [0] * 8
         for n in jogo:
             idx = (n - 1) // 10
